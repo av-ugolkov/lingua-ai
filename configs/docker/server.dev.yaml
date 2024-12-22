@@ -1,0 +1,52 @@
+pprof_debug:
+    enable: false
+    port: 6060
+logger:
+    output:
+        - console
+    level: debug
+    server_level: debug
+ssl:
+    enable: false
+    path: ./cert
+    public: fullchain.pem
+    private: privkey.pem
+jwt:
+    expire_access: 300 #5 min
+    expire_refresh: 3600 #1 hours
+aes:
+    key: 1234567890123456
+service:
+    port: 5000
+    allowed_origins:
+        - "http://localhost:5173"
+postgres:
+    name: pg-lingua-evo
+    user: lingua
+    host: postgres-base-dev
+    port: 5432
+    max_conns: 10
+    min_conns: 0
+    max_conn_life_time: 3600
+    max_conn_idle_time: 1800
+    health_check_period: 60
+    connect_timeout: 5
+redis:
+    name: redis
+    host: redis
+    port: 6379
+    user: lingua
+    db: 0
+email:
+    address: linguaevo@gmail.com
+    host: smtp.gmail.com
+    port: 587
+kafka:
+    enable: false
+    host: lingua-kafka
+    port: 9091
+    topics:
+        - user_action
+google:
+    secret_path: ./google_client_secret_dev.json
+    redirect_url: "http://localhost:5173"

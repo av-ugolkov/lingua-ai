@@ -1,0 +1,4 @@
+.env
+
+llm/speecht5_tts
+llm/XTTS-v2
