@@ -1,4 +1,5 @@
+.vscode
+
 .env
 
-llm/speecht5_tts
-llm/XTTS-v2
+llm/vits-piper-en_US-lessac-medium
