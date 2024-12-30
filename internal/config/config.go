@@ -1,0 +1,32 @@
+package config
+
+import (
+	"fmt"
+	"log/slog"
+	"os"
+
+	"github.com/ilyakaznacheev/cleanenv"
+)
+
+type Config struct {
+	Service Service `yaml:"service"`
+	DbSql   DbSql   `yaml:"postgres"`
+	Tts     Tts     `yaml:"tts"`
+}
+
+var instance *Config
+
+func Init(pathConfig string) *Config {
+	slog.Info("read application config")
+	instance = &Config{}
+	if err := cleanenv.ReadConfig(pathConfig, instance); err != nil {
+		slog.Error(fmt.Errorf("fail read config: %v", err).Error())
+		os.Exit(1)
+	}
+
+	return instance
+}
+
+func (c *Config) SetDBPassword(psw string) {
+	c.DbSql.Password = psw
+}

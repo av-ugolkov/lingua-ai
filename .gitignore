@@ -2,4 +2,4 @@
 
 .env
 
-llm/vits-piper-en_US-lessac-medium
+llm/*

@@ -10,7 +10,7 @@ import (
 
 func main() {
 	var configPath string
-	flag.StringVar(&configPath, "config", "./configs/server_config.yaml", "it's name of application config")
+	flag.StringVar(&configPath, "config", "./configs/server.yaml", "it's name of application config")
 
 	var pgPsw string
 	flag.StringVar(&pgPsw, "pg_psw", runtime.EmptyString, "password for postgres db")
@@ -21,8 +21,8 @@ func main() {
 		panic("empty jwts, pg_psw or redis_psw")
 	}
 
-	cfg := config.InitConfig(configPath)
-	config.SetDBPassword(pgPsw)
+	cfg := config.Init(configPath)
+	cfg.SetDBPassword(pgPsw)
 
 	app.ServerStart(cfg)
 }

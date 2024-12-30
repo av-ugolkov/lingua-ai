@@ -18,6 +18,10 @@ dev:
 database.down:
 	@echo ${shell ./deploy.sh database_down}
 
+.PHONY: download_llm
+download_llm:
+	@echo ${shell ./download_llm.sh}
+
 .PHONY: lint
 lint:
 	@go version

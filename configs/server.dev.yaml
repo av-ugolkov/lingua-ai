@@ -6,20 +6,10 @@ logger:
         - console
     level: debug
     server_level: debug
-ssl:
-    enable: false
-    path: /home/alex/cert/linguaevo.twc1.net
-    public: fullchain.pem
-    private: privkey.pem
-jwt:
-    expire_access: 300 #5 min
-    expire_refresh: 2592000 #30 days
-aes:
-    key: 1234567890123456
 service:
-    port: 5000
+    port: 5001
     allowed_origins:
-        - "http://localhost:5173"
+        - "http://localhost:5000"
     enable_swagger: true
 postgres:
     name: pg-lingua-evo
@@ -32,21 +22,20 @@ postgres:
     max_conn_idle_time: 1800
     health_check_period: 60
     connect_timeout: 5
-redis:
-    name: redis-lingua-evo
-    host: localhost
-    port: 6379
-    db: 0
-email:
-    address: linguaevo@gmail.com
-    host: smtp.gmail.com
-    port: 587
-kafka:
-    enable: false
-    host: lingua-kafka
-    port: 9091
-    topics:
-        - user_action
-google:
-    secret_path: ../google_client_secret_dev.json
-    redirect_url: "http://localhost:5173"
+tts:
+    models:
+        en:
+            vits-model: ../llm/vits-piper-en_US-lessac-medium/en_US-lessac-medium.onnx
+            vits-lexicon: ../llm/vits-vctk/lexicon.txt
+            vits-tokens: ../llm/vits-piper-en_US-lessac-medium/tokens.txt
+            vits-data-dir: ../llm/vits-piper-en_US-lessac-medium/espeak-ng-data
+            vits-noise-scale: 0.667
+            vits-noise-scale-w: 0.8
+            vits-length-scale: 1.0
+    num-threads: 1
+    debug: 1 
+    provider: cpu
+    tts-rule-fsts: ''
+    tts-rule-fars: ''
+    tts-max-num-sentences: 1
+    sid: 0

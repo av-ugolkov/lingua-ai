@@ -62,7 +62,7 @@ services:
       - lingua-dev
 
   migration:
-    container_name: migration-dev
+    container_name: migration-ai-dev
     image: migration:${BRANCH:-dev}
     build:
       context: ../migration
