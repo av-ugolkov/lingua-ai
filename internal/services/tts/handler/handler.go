@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/av-ugolkov/lingua-ai/internal/services/tts"
 
 	"github.com/gofiber/fiber/v2"
@@ -21,6 +23,6 @@ func Create(r *fiber.App, s *tts.Service) {
 func (h *Handler) GetAudio(c *fiber.Ctx) error {
 	text := c.Query("text")
 	lang := c.Query("lang")
-	audio := h.svc.GetAudio(text, lang)
-	return c.JSON(audio)
+	_ = h.svc.GetAudio(text, lang)
+	return c.SendStatus(http.StatusOK)
 }

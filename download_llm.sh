@@ -6,26 +6,16 @@ if [ ! -d llm ]; then
   mkdir llm
 fi
 
-if [ ! -d vits-ljs ]; then
-  curl -SL -o ./llm/vits-ljs.tar.bz2 https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-ljs.tar.bz2
-  tar xvf ./llm/vits-ljs.tar.bz2 -C ./llm
-  rm ./llm/vits-ljs.tar.bz2
+if [ ! -d llm/vits-piper-en_US-lessac-high ]; then
+  mkdir llm/vits-piper-en_US-lessac-high
+  git clone https://huggingface.co/csukuangfj/vits-piper-en_US-lessac-high llm/vits-piper-en_US-lessac-high
 fi
 
-if [ ! -d vits-piper-en_US-lessac-medium ]; then
-  curl -SL -o ./llm/vits-piper-en_US-lessac-medium.tar.bz2 https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_US-lessac-medium.tar.bz2
-  tar xvf ./llm/vits-piper-en_US-lessac-medium.tar.bz2 -C ./llm
-  rm ./llm/vits-piper-en_US-lessac-medium.tar.bz2
+if [ ! -d llm/vits-piper-ru_RU-irina-medium ]; then
+  mkdir llm/vits-piper-ru_RU-irina-medium
+  git clone https://huggingface.co/csukuangfj/vits-piper-ru_RU-irina-medium llm/vits-piper-ru_RU-irina-medium
 fi
 
-if [ ! -d vits-vctk ]; then
-  curl -SL -o ./llm/vits-vctk.tar.bz2 https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-vctk.tar.bz2
-  tar xvf ./llm/vits-vctk.tar.bz2 -C ./llm
-  rm ./llm/vits-vctk.tar.bz2
-fi
 
-if [ ! -d vits-icefall-zh-aishell3 ]; then
-  curl -SL -o ./llm/vits-icefall-zh-aishell3.tar.bz2 https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-icefall-zh-aishell3.tar.bz2
-  tar xvf ./llm/vits-icefall-zh-aishell3.tar.bz2 -C ./llm
-  rm ./llm/vits-icefall-zh-aishell3.tar.bz2
-fi
+# https://huggingface.co/willwade/mms-tts-multilingual-models-onnx
+# https://huggingface.co/csukuangfj?search_models=ru
