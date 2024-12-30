@@ -12,6 +12,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/av-ugolkov/lingua-ai/internal/closer"
 	"github.com/av-ugolkov/lingua-ai/internal/config"
 	ttsService "github.com/av-ugolkov/lingua-ai/internal/services/tts"
 	ttsHandler "github.com/av-ugolkov/lingua-ai/internal/services/tts/handler"
@@ -81,12 +82,18 @@ func ServerStart(cfg *config.Config) {
 		slog.Error(fmt.Sprintf("server shutdown returned an err: %v\n", err))
 	}
 
+	err := closer.Close(ctx)
+	if err != nil {
+		slog.Error(fmt.Sprintf("closer: %v\n", err.Error()))
+	}
+
 	slog.Info("final")
 }
 
 func initServer(cfg *config.Config, r *fiber.App) {
 	slog.Info("create services")
 	ttsSvc := ttsService.New(cfg.Tts)
+	closer.Add(ttsSvc.Close)
 
 	slog.Info("create handlers")
 	ttsHandler.Create(r, ttsSvc)

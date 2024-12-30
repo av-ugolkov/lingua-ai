@@ -1,6 +1,8 @@
 package tts
 
 import (
+	"context"
+
 	"github.com/av-ugolkov/lingua-ai/internal/config"
 	sherpa_onnx "github.com/k2-fsa/sherpa-onnx-go-linux"
 	sherpa "github.com/k2-fsa/sherpa-onnx-go/sherpa_onnx"
@@ -37,10 +39,12 @@ func New(cfg config.Tts) *Service {
 	}
 }
 
-func (s *Service) Close() {
+func (s *Service) Close(_ context.Context) error {
 	for _, v := range s.tts {
 		sherpa.DeleteOfflineTts(v)
 	}
+
+	return nil
 }
 
 func (s *Service) GetAudio(text string, lang string) []float32 {
