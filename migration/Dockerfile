@@ -1,4 +1,4 @@
-FROM golang:1.23.2-alpine as builder
+FROM golang:1.23.4-alpine as builder
 
 RUN apk --no-cache --update --upgrade add go
 
@@ -11,7 +11,7 @@ WORKDIR /migration
 ADD . /migration
 RUN go build -o migration .
 
-FROM alpine:3.20.3
+FROM alpine:3.21
 LABEL key="Lingua AI Migration"
 
 RUN --mount=type=cache,target=/var/cache/apk apk --update --upgrade add make bash

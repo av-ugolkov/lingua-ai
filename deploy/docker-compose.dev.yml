@@ -1,15 +1,16 @@
 services:
-  llm:
-    container_name: lingua-llm-dev
-    image: lingua-llm:${BRANCH:-dev}
-    build:
-      context: ../llm
-      dockerfile: Dockerfile
+  minio:
+    container_name: minio-ai-dev
+    image: minio/minio:latest
     depends_on:
       - ai
     restart: always
     expose:
-      - '5201'
+      - '9000'
+      - '9001'
+    environment:
+      - MINIO_ROOT_USER=lingua-minio
+      - MINIO_ROOT_PASSWORD=${MINIO_PSW}
     networks:
       - lingua-dev
 
@@ -26,9 +27,9 @@ services:
         source: /home/alex/DockerShareFiles
         target: /home/dump
     expose:
-      - '5433'
+      - '5432'
     ports:
-      - '6433:5433'
+      - '6432:5432'
     networks:
       - lingua-dev
 
@@ -48,7 +49,7 @@ services:
     volumes:
       - type: bind
         source: /home/alex/DockerShareFiles
-        target: /lingua-evo/logs
+        target: /lingua-ai/logs
     depends_on:
       - postgres
     restart: always
@@ -73,7 +74,7 @@ services:
     entrypoint:
       - '/bin/sh'
       - '-ecx'
-      - './migration -cmd ${CMD:-up} -url lingua:${PG_PSW}@postgres-ai-dev:5432/pg-lingua-evo?sslmode=disable'
+      - './migration -cmd ${CMD:-up} -url lingua-ai:${PG_PSW}@postgres-ai-dev:5432/pg-lingua-ai?sslmode=disable'
 
 networks:
   lingua-dev:

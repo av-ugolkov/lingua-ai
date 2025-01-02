@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	go build --gcflags="all=-N -l" -o ./cmd/main ./cmd/main.go
+	CGO_ENABLED=1 go build -x --gcflags='all=-N -l' -o ./cmd/main ./cmd/main.go
 
 .PHONY: run
 run:

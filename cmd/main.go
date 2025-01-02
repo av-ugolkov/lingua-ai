@@ -15,9 +15,12 @@ func main() {
 	var pgPsw string
 	flag.StringVar(&pgPsw, "pg_psw", runtime.EmptyString, "password for postgres db")
 
+	var minioPsw string
+	flag.StringVar(&minioPsw, "minio_psw", runtime.EmptyString, "password for minio")
+
 	flag.Parse()
 
-	if pgPsw == runtime.EmptyString {
+	if pgPsw == runtime.EmptyString || minioPsw == runtime.EmptyString {
 		panic("empty jwts, pg_psw or redis_psw")
 	}
 

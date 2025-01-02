@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/av-ugolkov/lingua-ai/internal/config"
-	sherpa_onnx "github.com/k2-fsa/sherpa-onnx-go-linux"
+
 	sherpa "github.com/k2-fsa/sherpa-onnx-go/sherpa_onnx"
 )
 
@@ -17,8 +17,8 @@ func New(cfg config.Tts) *Service {
 	tts := make(map[string]*sherpa.OfflineTts, len(cfg.Models))
 	for k, v := range cfg.Models {
 		tts[k] = sherpa.NewOfflineTts(&sherpa.OfflineTtsConfig{
-			Model: sherpa_onnx.OfflineTtsModelConfig{
-				Vits: sherpa_onnx.OfflineTtsVitsModelConfig{
+			Model: sherpa.OfflineTtsModelConfig{
+				Vits: sherpa.OfflineTtsVitsModelConfig{
 					Model:       v.VitsModel,
 					Lexicon:     v.VitsLexicon,
 					Tokens:      v.VitsTokens,

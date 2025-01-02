@@ -5,10 +5,12 @@ dev() {
   COMMIT="$(git $dir rev-parse HEAD)"
 
   pg_psw="$(cat .env | grep PG_PSW | cut -d "=" -f2)"
+  minio_psw="$(cat .env | grep MINIO_PSW | cut -d "=" -f2)"
   
   BRANCH=${BRANCH} \
   COMMIT=${COMMIT} \
   PG_PSW=${pg_psw} \
+  MINIO_PSW=${minio_psw} \
   docker compose -p lingua-evo-dev -f deploy/docker-compose.dev.yml up --build --force-recreate    
 }
 
