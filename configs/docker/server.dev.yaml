@@ -25,70 +25,70 @@ postgres:
 tts:
     models:
         en:
-            vits-model: ../llm/vits-piper-en_US-lessac-high/en_US-lessac-high.onnx
-            vits-tokens: ../llm/vits-piper-en_US-lessac-high/tokens.txt
-            vits-data-dir: ../llm/vits-piper-en_US-lessac-high/espeak-ng-data
+            vits-model: ./llm/vits-piper-en_US-lessac-high/en_US-lessac-high.onnx
+            vits-tokens: ./llm/vits-piper-en_US-lessac-high/tokens.txt
+            vits-data-dir: ./llm/vits-piper-en_US-lessac-high/espeak-ng-data
             vits-noise-scale: 0.667
             vits-noise-scale-w: 0.8
             vits-length-scale: 1.0
         ru:
-            vits-model: ../llm/vits-piper-ru_RU-irina-medium/ru_RU-irina-medium.onnx
-            vits-tokens: ../llm/vits-piper-ru_RU-irina-medium/tokens.txt
-            vits-data-dir: ../llm/vits-piper-ru_RU-irina-medium/espeak-ng-data
+            vits-model: ./llm/vits-piper-ru_RU-irina-medium/ru_RU-irina-medium.onnx
+            vits-tokens: ./llm/vits-piper-ru_RU-irina-medium/tokens.txt
+            vits-data-dir: ./llm/vits-piper-ru_RU-irina-medium/espeak-ng-data
             vits-noise-scale: 0.667
             vits-noise-scale-w: 0.8
             vits-length-scale: 1.0
         fi:
-            vits-model: ../llm/vits-piper-fi_FI-harri-medium/fi_FI-harri-medium.onnx
-            vits-tokens: ../llm/vits-piper-fi_FI-harri-medium/tokens.txt
-            vits-data-dir: ../llm/vits-piper-fi_FI-harri-medium/espeak-ng-data
+            vits-model: ./llm/vits-piper-fi_FI-harri-medium/fi_FI-harri-medium.onnx
+            vits-tokens: ./llm/vits-piper-fi_FI-harri-medium/tokens.txt
+            vits-data-dir: ./llm/vits-piper-fi_FI-harri-medium/espeak-ng-data
             vits-noise-scale: 0.667
             vits-noise-scale-w: 0.8
             vits-length-scale: 1.0
         de:
-            vits-model: ../llm/vits-piper-de_DE-thorsten-high/de_DE-thorsten-high.onnx
-            vits-tokens: ../llm/vits-piper-de_DE-thorsten-high/tokens.txt
-            vits-data-dir: ../llm/vits-piper-de_DE-thorsten-high/espeak-ng-data
+            vits-model: ./llm/vits-piper-de_DE-thorsten-high/de_DE-thorsten-high.onnx
+            vits-tokens: ./llm/vits-piper-de_DE-thorsten-high/tokens.txt
+            vits-data-dir: ./llm/vits-piper-de_DE-thorsten-high/espeak-ng-data
             vits-noise-scale: 0.667
             vits-noise-scale-w: 0.8
             vits-length-scale: 1.0
         es:
-            vits-model: ../llm/vits-piper-es_ES-davefx-medium/es_ES-davefx-medium.onnx
-            vits-tokens: ../llm/vits-piper-es_ES-davefx-medium/tokens.txt
-            vits-data-dir: ../llm/vits-piper-es_ES-davefx-medium/espeak-ng-data
+            vits-model: ./llm/vits-piper-es_ES-davefx-medium/es_ES-davefx-medium.onnx
+            vits-tokens: ./llm/vits-piper-es_ES-davefx-medium/tokens.txt
+            vits-data-dir: ./llm/vits-piper-es_ES-davefx-medium/espeak-ng-data
             vits-noise-scale: 0.667
             vits-noise-scale-w: 0.8
             vits-length-scale: 1.0
         fr:
-            vits-model: ../llm/vits-piper-fr_FR-siwis-medium/fr_FR-siwis-medium.onnx
-            vits-tokens: ../llm/vits-piper-fr_FR-siwis-medium/tokens.txt
-            vits-data-dir: ../llm/vits-piper-fr_FR-siwis-medium/espeak-ng-data
+            vits-model: ./llm/vits-piper-fr_FR-siwis-medium/fr_FR-siwis-medium.onnx
+            vits-tokens: ./llm/vits-piper-fr_FR-siwis-medium/tokens.txt
+            vits-data-dir: ./llm/vits-piper-fr_FR-siwis-medium/espeak-ng-data
             vits-noise-scale: 0.667
             vits-noise-scale-w: 0.8
             vits-length-scale: 1.0
         it:
-            vits-model: ../llm/vits-piper-it_IT-paola-medium/it_IT-paola-medium.onnx
-            vits-tokens: ../llm/vits-piper-it_IT-paola-medium/tokens.txt
-            vits-data-dir: ../llm/vits-piper-it_IT-paola-medium/espeak-ng-data
+            vits-model: ./llm/vits-piper-it_IT-paola-medium/it_IT-paola-medium.onnx
+            vits-tokens: ./llm/vits-piper-it_IT-paola-medium/tokens.txt
+            vits-data-dir: ./llm/vits-piper-it_IT-paola-medium/espeak-ng-data
             vits-noise-scale: 0.667
             vits-noise-scale-w: 0.8
             vits-length-scale: 1.0
         pt:
-            vits-model: ../llm/vits-piper-pt_PT-tugao-medium/pt_PT-tugao-medium.onnx
-            vits-tokens: ../llm/vits-piper-pt_PT-tugao-medium/tokens.txt
-            vits-data-dir: ../llm/vits-piper-pt_PT-tugao-medium/espeak-ng-data
+            vits-model: ./llm/vits-piper-pt_PT-tugao-medium/pt_PT-tugao-medium.onnx
+            vits-tokens: ./llm/vits-piper-pt_PT-tugao-medium/tokens.txt
+            vits-data-dir: ./llm/vits-piper-pt_PT-tugao-medium/espeak-ng-data
             vits-noise-scale: 0.667
             vits-noise-scale-w: 0.8
             vits-length-scale: 1.0
         sv:
-            vits-model: ../llm/vits-piper-sv_SE-nst-medium/sv_SE-nst-medium.onnx
-            vits-tokens: ../llm/vits-piper-sv_SE-nst-medium/tokens.txt
-            vits-data-dir: ../llm/vits-piper-sv_SE-nst-medium/espeak-ng-data
+            vits-model: ./llm/vits-piper-sv_SE-nst-medium/sv_SE-nst-medium.onnx
+            vits-tokens: ./llm/vits-piper-sv_SE-nst-medium/tokens.txt
+            vits-data-dir: ./llm/vits-piper-sv_SE-nst-medium/espeak-ng-data
             vits-noise-scale: 0.667
             vits-noise-scale-w: 0.8
             vits-length-scale: 1.0
     num-threads: 1
-    debug: 1 
+    debug: 0 
     provider: cpu
     tts-rule-fsts: ''
     tts-rule-fars: ''
