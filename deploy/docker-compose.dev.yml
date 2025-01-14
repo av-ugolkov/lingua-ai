@@ -42,16 +42,17 @@ services:
       args:
         config_dir: ${CONFIG:-docker/server.dev}
         pg_psw: ${PG_PSW}
+        minio_psw: ${MINIO_PSW}
         branch: ${BRANCH}
         commit: ${COMMIT}
       additional_contexts:
         root: /
-    volumes:
-      - type: bind
-        source: /home/alex/DockerShareFiles
-        target: /lingua-ai/logs
-    depends_on:
-      - postgres
+        # volumes:
+        #- type: bind
+        #   source: /home/alex/DockerShareFiles
+        #   target: /lingua-ai/logs
+        # depends_on:
+        #   - postgres
     restart: always
     extra_hosts:
       - 'host.docker.internal:host-gateway'

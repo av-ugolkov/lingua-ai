@@ -21,7 +21,7 @@ func main() {
 	flag.Parse()
 
 	if pgPsw == runtime.EmptyString || minioPsw == runtime.EmptyString {
-		panic("empty jwts, pg_psw or redis_psw")
+		panic("empty pg_psw or minio_psw")
 	}
 
 	cfg := config.Init(configPath)

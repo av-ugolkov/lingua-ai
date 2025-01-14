@@ -6,8 +6,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/jackc/pgx/v5 v5.7.2
-	github.com/k2-fsa/sherpa-onnx-go v1.8.14
-	github.com/k2-fsa/sherpa-onnx-go-linux v1.10.36
+	github.com/k2-fsa/sherpa-onnx-go-linux v1.10.37
 )
 
 require (
@@ -19,8 +18,6 @@ require (
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/json-iterator/go v1.1.12
-	github.com/k2-fsa/sherpa-onnx-go-macos v1.10.36 // indirect
-	github.com/k2-fsa/sherpa-onnx-go-windows v1.10.36 // indirect
 	github.com/klauspost/compress v1.17.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect

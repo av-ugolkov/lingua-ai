@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	CGO_ENABLED=1 go build -x --gcflags='all=-N -l' -o ./cmd/main ./cmd/main.go
+	CGO_LDFLAGS="-L /lingua-ai/lib/x86_64-unknown-linux-gnu -lsherpa-onnx-c-api -lonnxruntime -Wl,-rpath,/lingua-ai/lib/x86_64-unknown-linux-gnu" go build --gcflags='all=-N -l' -o main cmd/main.go
 
 .PHONY: run
 run:
@@ -14,6 +14,10 @@ release:
 dev:
 	@./deploy.sh dev
 
+.PHONY: dev_ai
+dev_ai:
+	@./deploy.sh dev_ai
+	
 .PHONY: database.down
 database.down:
 	@echo ${shell ./deploy.sh database_down}

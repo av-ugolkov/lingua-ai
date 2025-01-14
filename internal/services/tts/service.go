@@ -5,7 +5,7 @@ import (
 
 	"github.com/av-ugolkov/lingua-ai/internal/config"
 
-	sherpa "github.com/k2-fsa/sherpa-onnx-go/sherpa_onnx"
+	sherpa "github.com/k2-fsa/sherpa-onnx-go-linux"
 )
 
 type Service struct {

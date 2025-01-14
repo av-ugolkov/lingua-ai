@@ -4,7 +4,7 @@ WORKDIR /build
 COPY . .
 RUN --mount=type=cache,target=/go make build
 
-FROM alpine:3.21
+FROM debian:trixie-slim
 LABEL key="Lingua AI"
 
 ARG config_dir
@@ -16,13 +16,12 @@ ARG commit
 LABEL git.branch=$branch
 LABEL git.commit=$commit
 
-RUN --mount=type=cache,target=/var/cache/apk apk --update --upgrade add git bash gcc
-
 WORKDIR /lingua-ai
 
 COPY /configs/${config_dir}.yaml ./configs/server.yaml
-COPY --from=builder ./build/cmd/main ./
-COPY /llm ./llm
+COPY --from=builder ./build/main ./
+COPY ./llm ./llm/
+COPY ./lib ./lib/
 
 EXPOSE 5100
 
