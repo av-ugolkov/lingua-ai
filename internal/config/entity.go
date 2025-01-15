@@ -42,3 +42,9 @@ type (
 		VitsDataDir     string  `yaml:"vits-data-dir"`
 	}
 )
+
+type Minio struct {
+	Endpoint  string `yaml:"endpoint"`
+	AccessKey string `yaml:"access_key"`
+	SecretKey string `yaml:"secret_key"`
+}

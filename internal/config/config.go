@@ -12,6 +12,7 @@ type Config struct {
 	Service Service `yaml:"service"`
 	DbSql   DbSql   `yaml:"postgres"`
 	Tts     Tts     `yaml:"tts"`
+	Minio   Minio   `yaml:"minio"`
 }
 
 var instance *Config

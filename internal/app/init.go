@@ -14,6 +14,7 @@ import (
 
 	"github.com/av-ugolkov/lingua-ai/internal/closer"
 	"github.com/av-ugolkov/lingua-ai/internal/config"
+	"github.com/av-ugolkov/lingua-ai/internal/minio"
 	ttsService "github.com/av-ugolkov/lingua-ai/internal/services/tts"
 	ttsHandler "github.com/av-ugolkov/lingua-ai/internal/services/tts/handler"
 
@@ -23,6 +24,8 @@ import (
 )
 
 func ServerStart(cfg *config.Config) {
+	minio := minio.Init(&cfg.Minio)
+
 	router := fiber.New(fiber.Config{
 		AppName:      "Lingua AI",
 		JSONEncoder:  jsoniter.Marshal,
@@ -51,7 +54,7 @@ func ServerStart(cfg *config.Config) {
 		AllowHeaders:     "Authorization,Content-Type,Fingerprint",
 	}))
 
-	initServer(cfg, router)
+	initServer(cfg, router, minio)
 
 	address := fmt.Sprintf(":%d", cfg.Service.Port)
 
@@ -90,9 +93,9 @@ func ServerStart(cfg *config.Config) {
 	slog.Info("final")
 }
 
-func initServer(cfg *config.Config, r *fiber.App) {
+func initServer(cfg *config.Config, r *fiber.App, minio *minio.Minio) {
 	slog.Info("create services")
-	ttsSvc := ttsService.New(cfg.Tts)
+	ttsSvc := ttsService.New(cfg.Tts).SetMinio(minio)
 	closer.Add(ttsSvc.Close)
 
 	slog.Info("create handlers")
