@@ -31,3 +31,7 @@ func Init(pathConfig string) *Config {
 func (c *Config) SetDBPassword(psw string) {
 	c.DbSql.Password = psw
 }
+
+func (c *Config) SetMinioPassword(psw string) {
+	c.Minio.RootPsw = psw
+}

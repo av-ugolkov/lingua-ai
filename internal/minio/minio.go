@@ -23,8 +23,9 @@ type Minio struct {
 }
 
 func Init(cfg *config.Minio) *Minio {
-	minioClient, err := mc.New(cfg.Endpoint, &mc.Options{
-		Creds: credentials.NewStaticV4(cfg.AccessKey, cfg.SecretKey, ""),
+	minioClient, err := mc.New(cfg.Addr(), &mc.Options{
+		Creds:  credentials.NewStaticV4(cfg.RootUser, cfg.RootPsw, ""),
+		Secure: false,
 	})
 	if err != nil {
 		log.Fatal(err)

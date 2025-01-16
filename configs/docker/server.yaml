@@ -4,13 +4,13 @@ pprof_debug:
 logger:
     output:
         - console
-    level: debug
-    server_level: debug
+        - file
+    level: info
+    server_level: error
 service:
     port: 5001
     allowed_origins:
         - "http://localhost:5000"
-    enable_swagger: true
 postgres:
     name: pg-lingua-evo
     user: lingua
@@ -22,6 +22,10 @@ postgres:
     max_conn_idle_time: 1800
     health_check_period: 60
     connect_timeout: 5
+minio:
+    root_user: lingua-minio
+    host: minio-ai
+    port: 9000
 tts:
     models:
         en:

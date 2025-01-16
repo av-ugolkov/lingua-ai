@@ -1,15 +1,16 @@
 package config
 
+import "fmt"
+
 type Service struct {
 	Port           uint16   `yaml:"port" env-default:"8080"`
 	AllowedOrigins []string `yaml:"allowed_origins" env-default:"http://localhost:5173"`
-	EnableSwagger  bool     `yaml:"enable_swagger" env-default:"false"`
 }
 
 type DbSql struct {
 	Name              string `yaml:"name"`
 	User              string `yaml:"user"`
-	Password          string
+	Password          string `yaml:"-"`
 	Host              string `yaml:"host"`
 	Port              uint16 `yaml:"port"`
 	MaxConns          uint16 `yaml:"max_conns"`
@@ -44,7 +45,12 @@ type (
 )
 
 type Minio struct {
-	Endpoint  string `yaml:"endpoint"`
-	AccessKey string `yaml:"access_key"`
-	SecretKey string `yaml:"secret_key"`
+	Host     string `yaml:"host"`
+	Port     string `yaml:"port"`
+	RootUser string `yaml:"root_user"`
+	RootPsw  string `yaml:"-"`
+}
+
+func (m *Minio) Addr() string {
+	return fmt.Sprintf("%s:%s", m.Host, m.Port)
 }
