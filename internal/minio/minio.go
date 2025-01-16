@@ -3,13 +3,13 @@ package minio
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
-	"os"
 	"time"
 
 	"github.com/av-ugolkov/lingua-ai/internal/config"
-	"github.com/google/uuid"
 
+	"github.com/google/uuid"
 	mc "github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 )
@@ -57,24 +57,28 @@ func (m *Minio) CreateBucket(name string) {
 }
 
 func (m *Minio) UploadAudio(ctx context.Context, id uuid.UUID, filePath string) error {
-	info, err := m.client.FPutObject(ctx, AudioBucketName, id.String(), filePath,
+	_, err := m.client.FPutObject(ctx, AudioBucketName, id.String(), filePath,
 		mc.PutObjectOptions{ContentType: "audio/wav"})
 	if err != nil {
 		return fmt.Errorf("minio.SaveAudio: %w", err)
 	}
-	fmt.Printf("info: %v\n", info)
 	return nil
 }
 
 func (m *Minio) LoadAudio(ctx context.Context, id uuid.UUID) ([]byte, error) {
-	fullPath := fmt.Sprintf("/tmp/%s.wav", id)
-	err := m.client.FGetObject(ctx, AudioBucketName, id.String(), fullPath, mc.GetObjectOptions{})
+	obj, err := m.client.GetObject(ctx, AudioBucketName, id.String(), mc.GetObjectOptions{})
 	if err != nil {
 		return nil, fmt.Errorf("minio.LoadAudio: %w", err)
 	}
 
-	data, err := os.ReadFile(fullPath)
+	dataStat, err := obj.Stat()
 	if err != nil {
+		return nil, fmt.Errorf("minio.LoadAudio: %w", err)
+	}
+
+	data := make([]byte, dataStat.Size)
+	_, err = obj.Read(data)
+	if err != nil && err != io.EOF {
 		return nil, fmt.Errorf("minio.LoadAudio: %w", err)
 	}
 

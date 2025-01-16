@@ -44,5 +44,6 @@ func (h *Handler) GetAudio(c *fiber.Ctx) error {
 		})
 	}
 
+	c.Context().SetContentType("audio/wav")
 	return c.Status(http.StatusOK).Send(data)
 }

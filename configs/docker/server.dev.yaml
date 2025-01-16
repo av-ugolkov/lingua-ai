@@ -7,7 +7,7 @@ logger:
     level: debug
     server_level: debug
 service:
-    port: 5001
+    port: 5100
     allowed_origins:
         - "http://localhost:5000"
 postgres:
@@ -97,3 +97,4 @@ tts:
     tts-rule-fars: ''
     tts-max-num-sentences: 1
     sid: 0
+    timeout: 10m

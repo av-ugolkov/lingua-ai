@@ -1,10 +1,13 @@
 package config
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type Service struct {
-	Port           uint16   `yaml:"port" env-default:"8080"`
-	AllowedOrigins []string `yaml:"allowed_origins" env-default:"http://localhost:5173"`
+	Port           uint16   `yaml:"port" env-default:"5001"`
+	AllowedOrigins []string `yaml:"allowed_origins" env-default:"http://localhost:5000"`
 }
 
 type DbSql struct {
@@ -31,6 +34,7 @@ type (
 		TtsRuleFsts        string           `yaml:"tts-rule-fsts"`
 		TtsRuleFars        string           `yaml:"tts-rule-fars"`
 		Models             map[string]Model `yaml:"models"`
+		Timeout            time.Duration    `yaml:"timeout"`
 	}
 
 	Model struct {
