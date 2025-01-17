@@ -10,7 +10,6 @@ import (
 
 type Config struct {
 	Service Service `yaml:"service"`
-	DbSql   DbSql   `yaml:"postgres"`
 	Tts     Tts     `yaml:"tts"`
 	Minio   Minio   `yaml:"minio"`
 }
@@ -26,10 +25,6 @@ func Init(pathConfig string) *Config {
 	}
 
 	return instance
-}
-
-func (c *Config) SetDBPassword(psw string) {
-	c.DbSql.Password = psw
 }
 
 func (c *Config) SetMinioPassword(psw string) {

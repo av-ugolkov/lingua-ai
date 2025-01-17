@@ -4,11 +4,11 @@ go 1.23.4
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.5
+	github.com/google/uuid v1.6.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/jackc/pgx/v5 v5.7.2
-	github.com/k2-fsa/sherpa-onnx-go-linux v1.10.37
-	github.com/google/uuid v1.6.0
 	github.com/json-iterator/go v1.1.12
+	github.com/k2-fsa/sherpa-onnx-go-linux v1.10.37
 	github.com/minio/minio-go/v7 v7.0.83
 )
 

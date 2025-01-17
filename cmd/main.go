@@ -25,7 +25,6 @@ func main() {
 	}
 
 	cfg := config.Init(configPath)
-	cfg.SetDBPassword(pgPsw)
 	cfg.SetMinioPassword(minioPsw)
 
 	app.ServerStart(cfg)

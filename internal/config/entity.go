@@ -10,20 +10,6 @@ type Service struct {
 	AllowedOrigins []string `yaml:"allowed_origins" env-default:"http://localhost:5000"`
 }
 
-type DbSql struct {
-	Name              string `yaml:"name"`
-	User              string `yaml:"user"`
-	Password          string `yaml:"-"`
-	Host              string `yaml:"host"`
-	Port              uint16 `yaml:"port"`
-	MaxConns          uint16 `yaml:"max_conns"`
-	MinConns          uint16 `yaml:"min_conns"`
-	MaxConnLifetime   uint32 `yaml:"max_conn_life_time"`
-	MaxConnIdleTime   uint32 `yaml:"max_conn_idle_time"`
-	HealthCheckPeriod uint32 `yaml:"health_check_period"`
-	ConnectTimeout    uint32 `yaml:"connect_timeout"`
-}
-
 type (
 	Tts struct {
 		Debug              uint8            `yaml:"debug"`
