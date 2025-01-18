@@ -1,6 +1,6 @@
 services:
   minio:
-    container_name: minio-ai-dev
+    container_name: minio-ai
     image: minio/minio:latest
     restart: always
     expose:
@@ -14,18 +14,18 @@ services:
       - MINIO_ROOT_PASSWORD=${MINIO_PSW}
     command: server /data --console-address ":9001"
     volumes:
-      - /var/lib/minio/lingua-ai-dev/data:/data
+      - /var/lib/minio/lingua-ai/data:/data
     networks:
-      - lingua-dev
+      - lingua
 
   ai:
-    container_name: lingua-ai-dev
-    image: lingua-ai:${BRANCH:-dev}
+    container_name: lingua-ai
+    image: lingua-ai:${BRANCH:-prod}
     build:
       context: ../.
       dockerfile: Dockerfile
       args:
-        config_dir: ${CONFIG:-docker/server.dev}
+        config_dir: ${CONFIG:-docker/server}
         minio_psw: ${MINIO_PSW}
         branch: ${BRANCH}
         commit: ${COMMIT}
@@ -33,7 +33,7 @@ services:
         root: /
     volumes:
       - type: bind
-        source: /home/alex/DockerShareFiles
+        source: /home/DockerShareFiles
         target: /lingua-ai/logs
     depends_on:
       - minio
@@ -45,8 +45,8 @@ services:
     ports:
       - '5100:5100'
     networks:
-      - lingua-dev
+      - lingua
 
 networks:
-  lingua-dev:
-    name: lingua-dev
+  lingua:
+    name: lingua

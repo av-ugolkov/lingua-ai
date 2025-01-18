@@ -4,52 +4,12 @@ dev() {
   BRANCH="$(cut -d "/" -f2 <<< "$(git rev-parse --abbrev-ref HEAD)")"
   COMMIT="$(git $dir rev-parse HEAD)"
 
-  pg_psw="$(cat .env | grep PG_PSW | cut -d "=" -f2)"
   minio_psw="$(cat .env | grep MINIO_PSW | cut -d "=" -f2)"
   
   BRANCH=${BRANCH} \
   COMMIT=${COMMIT} \
-  PG_PSW=${pg_psw} \
   MINIO_PSW=${minio_psw} \
   docker compose -p lingua-evo-dev -f deploy/docker-compose.dev.yml up --build --force-recreate    
-}
-
-dev_ai() {
-  BRANCH="$(cut -d "/" -f2 <<< "$(git rev-parse --abbrev-ref HEAD)")"
-  COMMIT="$(git $dir rev-parse HEAD)"
-
-  pg_psw="$(cat .env | grep PG_PSW | cut -d "=" -f2)"
-  minio_psw="$(cat .env | grep MINIO_PSW | cut -d "=" -f2)"
-  
-  BRANCH=${BRANCH} \
-  COMMIT=${COMMIT} \
-  PG_PSW=${pg_psw} \
-  MINIO_PSW=${minio_psw} \
-  docker compose -p lingua-evo-dev -f deploy/docker-compose.dev.yml up ai --build --force-recreate    
-}
-
-database() {
-  BRANCH="$(git rev-parse --abbrev-ref HEAD)"
-  
-  pg_psw="$(cat db.env | grep PG_PSW | cut -d "=" -f2)"
-  redis_psw="$(cat db.env | grep REDIS_PSW | cut -d "=" -f2)"
-
-  PG_PSW=${pg_psw} \
-  BRANCH=${BRANCH} \
-  docker compose -p lingua-evo-dev -f deploy/docker-compose.dev.yml up redis postgres migration --build --force-recreate    
-}
-
-database_down() {
-  BRANCH="$(git rev-parse --abbrev-ref HEAD)"
-  
-  pg_psw="$(cat db.env | grep PG_PSW | cut -d "=" -f2)"
-  redis_psw="$(cat db.env | grep REDIS_PSW | cut -d "=" -f2)"
-
-  PG_PSW=${pg_psw} \
-  REDIS_PSW=${redis_psw} \
-  BRANCH=${BRANCH} \
-  CMD=down \
-  docker compose -p lingua-evo-dev -f deploy/docker-compose.dev.yml up redis postgres migration --build --force-recreate    
 }
 
 release() {
@@ -65,12 +25,6 @@ release() {
     echo "Directory [ lingua-dumps ] exists."
   else
     mkdir /home/lingua-dumps
-  fi
-
-  echo "Do you want to create a backup for database? [y/n]"
-  read ans
-  if [ "$ans" = "y" ]; then
-    ./backup.sh
   fi
 
   BRANCH="$(cut -d "/" -f2 <<< "$(git rev-parse --abbrev-ref HEAD)")"
@@ -91,11 +45,11 @@ release() {
 
   COMMIT="$(git $dir rev-parse HEAD)"
 
-  pg_psw="$(cat .env | grep PG_PSW | cut -d "=" -f2)"
-  
-  PG_PSW=${pg_psw} \
+  minio_psw="$(cat .env | grep MINIO_PSW | cut -d "=" -f2)"
+
   BRANCH=${BRANCH} \
   COMMIT=${COMMIT} \
+  MINIO_PSW=${minio_psw} \
   docker compose -p lingua-evo -f deploy/docker-compose.yml up --build --force-recreate
 }
 
