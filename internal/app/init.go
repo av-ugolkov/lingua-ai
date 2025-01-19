@@ -15,6 +15,7 @@ import (
 	"github.com/av-ugolkov/lingua-ai/internal/closer"
 	"github.com/av-ugolkov/lingua-ai/internal/config"
 	"github.com/av-ugolkov/lingua-ai/internal/minio"
+	healthHandler "github.com/av-ugolkov/lingua-ai/internal/services/health/handler"
 	ttsService "github.com/av-ugolkov/lingua-ai/internal/services/tts"
 	ttsHandler "github.com/av-ugolkov/lingua-ai/internal/services/tts/handler"
 
@@ -100,6 +101,8 @@ func initServer(cfg *config.Config, r *fiber.App, minio *minio.Minio) {
 
 	slog.Info("create handlers")
 	ttsHandler.Create(r, ttsSvc)
+
+	healthHandler.Create(r)
 
 	slog.Info("end init services")
 }
