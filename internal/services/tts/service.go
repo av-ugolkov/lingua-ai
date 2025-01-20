@@ -26,11 +26,6 @@ type (
 	}
 )
 
-type TtsModel struct {
-	model *sherpa.OfflineTts
-	timer *time.Timer
-}
-
 type Service struct {
 	tts     map[string]*TtsModel
 	models  map[string]*sherpa.OfflineTtsConfig
@@ -84,15 +79,20 @@ func (s *Service) Close(_ context.Context) error {
 }
 
 func (s *Service) getModel(lang string) (*sherpa.OfflineTts, error) {
+	s.mx.RLock()
+	if m, ok := s.tts[lang]; ok {
+		s.tts[lang].timer.Reset(s.timeout)
+		s.mx.RUnlock()
+		return m.model, nil
+	}
+	s.mx.RUnlock()
+
 	s.mx.Lock()
 	defer s.mx.Unlock()
-
-	m, ok := s.tts[lang]
-	if ok {
+	if m, ok := s.tts[lang]; ok {
 		s.tts[lang].timer.Reset(s.timeout)
 		return m.model, nil
 	}
-
 	s.tts[lang] = &TtsModel{
 		model: sherpa.NewOfflineTts(s.models[lang]),
 		timer: time.AfterFunc(s.timeout, func() {
