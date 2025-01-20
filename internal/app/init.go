@@ -101,7 +101,6 @@ func initServer(cfg *config.Config, r *fiber.App, minio *minio.Minio) {
 
 	slog.Info("create handlers")
 	ttsHandler.Create(r, ttsSvc)
-
 	healthHandler.Create(r)
 
 	slog.Info("end init services")
