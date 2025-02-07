@@ -51,5 +51,11 @@ if [ ! -d llm/vits-piper-sv_SE-nst-medium ]; then
   git clone https://huggingface.co/csukuangfj/vits-piper-sv_SE-nst-medium llm/vits-piper-sv_SE-nst-medium
 fi
 
+if [ ! -d llm/vits-piper-pl_PL-gosia-medium ]; then
+  mkdir llm/vits-piper-pl_PL-gosia-medium
+  git clone https://huggingface.co/csukuangfj/vits-piper-pl_PL-gosia-medium llm/vits-piper-pl_PL-gosia-medium
+fi
+
+# https://huggingface.co/spaces/k2-fsa/text-to-speech
 # https://huggingface.co/willwade/mms-tts-multilingual-models-onnx
 # https://huggingface.co/csukuangfj?search_models=ru
