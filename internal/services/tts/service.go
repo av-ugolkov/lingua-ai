@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log/slog"
 	"os"
-	"strings"
 	"sync"
 	"time"
 
@@ -105,13 +104,15 @@ func (s *Service) getModel(lang string) (*sherpa.OfflineTts, error) {
 	return s.tts[lang].model, nil
 }
 
-func (s *Service) GetAudio(ctx context.Context, id uuid.UUID, text string, lang string) ([]byte, error) {
-	data, err := s.getAudioData(ctx, id)
-	if err != nil {
-		slog.Warn(fmt.Sprintf("tts.Service.GetAudio: %v", err))
-	}
-	if data != nil {
-		return data, nil
+func (s *Service) GetAudio(ctx context.Context, id uuid.UUID, text string, lang string, cache bool) ([]byte, error) {
+	if cache {
+		data, err := s.getAudioData(ctx, id)
+		if err != nil {
+			slog.Warn(fmt.Sprintf("tts.Service.GetAudio: %v", err))
+		}
+		if data != nil {
+			return data, nil
+		}
 	}
 
 	tts, err := s.getModel(lang)
@@ -119,12 +120,21 @@ func (s *Service) GetAudio(ctx context.Context, id uuid.UUID, text string, lang 
 		return nil, fmt.Errorf("tts.Service.GetAudio: %v", err)
 	}
 
-	if !strings.HasPrefix(text, " ") {
-		text = fmt.Sprintf(" %s", text)
-	}
 	audio := tts.Generate(text, s.sid, speed)
+	pathFile, err := s.saveAudioData(id, audio)
+	if err != nil {
+		return nil, fmt.Errorf("tts.Service.GetAudio: %w", err)
+	}
+	defer os.Remove(pathFile)
 
-	data, err = s.uploadAudioData(ctx, id, audio)
+	if cache {
+		err := s.cacheAudioData(ctx, id, pathFile)
+		if err != nil {
+			return nil, fmt.Errorf("tts.Service.GetAudio: %w", err)
+		}
+	}
+
+	data, err := s.loadAudioData(pathFile)
 	if err != nil {
 		return nil, fmt.Errorf("tts.Service.GetAudio: %w", err)
 	}
@@ -132,26 +142,31 @@ func (s *Service) GetAudio(ctx context.Context, id uuid.UUID, text string, lang 
 	return data, nil
 }
 
-func (s *Service) uploadAudioData(ctx context.Context, id uuid.UUID, audio *sherpa.GeneratedAudio) ([]byte, error) {
+func (s *Service) saveAudioData(id uuid.UUID, audio *sherpa.GeneratedAudio) (string, error) {
 	pathFile := fmt.Sprintf("/tmp/%s.wav", id)
 
 	if ok := audio.Save(pathFile); !ok {
-		return nil, fmt.Errorf("tts.Service.uploadAudioData: file not saved")
+		return "", fmt.Errorf("tts.Service.uploadAudioData: file not saved")
 	}
 
-	defer os.Remove(pathFile)
+	return pathFile, nil
+}
 
-	err := s.minio.UploadAudio(ctx, id, pathFile)
-	if err != nil {
-		return nil, fmt.Errorf("tts.Service.uploadAudioData: %w", err)
-	}
-
+func (s *Service) loadAudioData(pathFile string) ([]byte, error) {
 	data, err := os.ReadFile(pathFile)
 	if err != nil {
-		return nil, fmt.Errorf("tts.Service.uploadAudioData: %w", err)
+		return nil, fmt.Errorf("tts.Service.loadAudioData: %w", err)
+	}
+	return data, nil
+}
+
+func (s *Service) cacheAudioData(ctx context.Context, id uuid.UUID, pathFile string) error {
+	err := s.minio.UploadAudio(ctx, id, pathFile)
+	if err != nil {
+		return fmt.Errorf("tts.Service.cacheAudioData: %w", err)
 	}
 
-	return data, nil
+	return nil
 }
 
 func (s *Service) getAudioData(ctx context.Context, id uuid.UUID) ([]byte, error) {

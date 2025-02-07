@@ -25,9 +25,10 @@ func (h *Handler) GetAudio(c *fiber.Ctx) error {
 	ctx := c.Context()
 
 	var query struct {
-		ID   uuid.UUID `json:"id"`
-		Text string    `json:"text"`
-		Lang string    `json:"lang"`
+		ID    uuid.UUID `json:"id"`
+		Text  string    `json:"text"`
+		Lang  string    `json:"lang"`
+		Cache bool      `json:"cache"`
 	}
 
 	err := c.QueryParser(&query)
@@ -37,7 +38,7 @@ func (h *Handler) GetAudio(c *fiber.Ctx) error {
 		})
 	}
 
-	data, err := h.svc.GetAudio(ctx, query.ID, query.Text, query.Lang)
+	data, err := h.svc.GetAudio(ctx, query.ID, query.Text, query.Lang, query.Cache)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"msg": err.Error(),
